@@ -1,11 +1,10 @@
 import React from 'react';
 import { Menu, Container, Button } from 'semantic-ui-react';
+import { useStore } from '../stores/store';
 
-interface Props {
-  formOpen: () => void;
-}
+export default function NarBar() {
+  const { activityStore } = useStore();
 
-export default function NarBar({ formOpen }: Props) {
   return (
     <Menu inverted fixed='top'>
       <Container>
@@ -20,7 +19,7 @@ export default function NarBar({ formOpen }: Props) {
         <Menu.Item name='activities'></Menu.Item>
         <Menu.Item>
           <Button
-            onClick={formOpen}
+            onClick={() => activityStore.formOpen()}
             positive
             content='Create Activity'></Button>
         </Menu.Item>
