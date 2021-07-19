@@ -1,14 +1,12 @@
 import React from 'react';
 import { Menu, Container, Button } from 'semantic-ui-react';
-import { useStore } from '../stores/store';
+import { NavLink } from 'react-router-dom';
 
 export default function NarBar() {
-  const { activityStore } = useStore();
-
   return (
     <Menu inverted fixed='top'>
       <Container>
-        <Menu.Item header>
+        <Menu.Item header as={NavLink} to='/' exact>
           <img
             src='/assets/logo.png'
             alt='logo'
@@ -16,12 +14,9 @@ export default function NarBar() {
           />
           Reactivities
         </Menu.Item>
-        <Menu.Item name='activities'></Menu.Item>
-        <Menu.Item>
-          <Button
-            onClick={() => activityStore.formOpen()}
-            positive
-            content='Create Activity'></Button>
+        <Menu.Item as={NavLink} to='/activities' name='activities'></Menu.Item>
+        <Menu.Item as={NavLink} to='/createActivity'>
+          <Button positive content='Create Activity'></Button>
         </Menu.Item>
       </Container>
     </Menu>
