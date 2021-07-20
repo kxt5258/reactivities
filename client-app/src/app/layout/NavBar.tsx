@@ -15,6 +15,7 @@ export default function NarBar() {
           Reactivities
         </Menu.Item>
         <Menu.Item as={NavLink} to='/activities' name='activities'></Menu.Item>
+        <Menu.Item as={NavLink} to='/errors' name='errors'></Menu.Item>
         <Menu.Item as={NavLink} to='/createActivity'>
           <Button positive content='Create Activity'></Button>
         </Menu.Item>
