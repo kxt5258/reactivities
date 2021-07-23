@@ -8,7 +8,7 @@ export default class ActivityStore {
   selectedActivity: Activity | undefined = undefined;
   editMode: boolean = false;
   loading: boolean = false;
-  loadingInitital: boolean = false;
+  loadingInitital: boolean = true;
   editting: boolean = false;
 
   constructor() {
@@ -36,7 +36,7 @@ export default class ActivityStore {
 
   loadActivities = async () => {
     try {
-      const activitiesList = await agent.activities.list();
+      const activitiesList = await agent.Activities.list();
 
       activitiesList.forEach((activity) => {
         this.setActivity(activity);
@@ -56,7 +56,7 @@ export default class ActivityStore {
     } else {
       this.loadingInitital = true;
       try {
-        activity = await agent.activities.detail(id);
+        activity = await agent.Activities.detail(id);
         this.setActivity(activity);
         runInAction(() => {
           this.selectedActivity = activity;
@@ -88,7 +88,7 @@ export default class ActivityStore {
     this.loading = true;
 
     try {
-      await agent.activities.create(activity);
+      await agent.Activities.create(activity);
       runInAction(() => {
         this.activityRegistry.set(activity.id, activity);
         this.selectedActivity = activity;
@@ -108,7 +108,7 @@ export default class ActivityStore {
     this.loading = true;
 
     try {
-      await agent.activities.update(activity);
+      await agent.Activities.update(activity);
       runInAction(() => {
         this.activityRegistry.set(activity.id, activity);
         this.selectedActivity = activity;
@@ -128,7 +128,7 @@ export default class ActivityStore {
     this.loading = true;
 
     try {
-      await agent.activities.delete(id);
+      await agent.Activities.delete(id);
       runInAction(() => {
         this.activityRegistry.delete(id);
         this.loading = false;

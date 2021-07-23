@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Services;
@@ -53,11 +52,13 @@ namespace API.Controllers
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                return BadRequest("Email not available");
+                ModelState.AddModelError("email", "Email not available");
+                return ValidationProblem(ModelState);
             }
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
-                return BadRequest("Username not available");
+                ModelState.AddModelError("username", "Username not available");
+                return ValidationProblem(ModelState);
             }
 
             var user = new AppUser
