@@ -1,8 +1,9 @@
 import React from 'react';
-import { Item, Button, Segment, Icon } from 'semantic-ui-react';
+import { Item, Button, Segment, Icon, Label } from 'semantic-ui-react';
 import { Activity } from '../../../app/models/activity';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import { ActivityListenItemAttendee } from './ActivityListenItemAttendee';
 
 interface Props {
   activity: Activity;
@@ -11,6 +12,13 @@ interface Props {
 const ActivityListItem = ({ activity }: Props) => {
   return (
     <Segment.Group>
+      {activity.isCancelled && (
+        <Label
+          attached='top'
+          color='red'
+          content='Cancelled'
+          style={{ textAlign: 'center' }}></Label>
+      )}
       <Segment>
         <Item.Group>
           <Item>
@@ -19,7 +27,23 @@ const ActivityListItem = ({ activity }: Props) => {
               <Item.Header as={Link} to={`/activities/${activity.id}`}>
                 {activity.title}
               </Item.Header>
-              <Item.Description>Hosted by Kinley</Item.Description>
+              <Item.Description>
+                Hosted by {activity.host?.displayName}
+                {activity.isHost && (
+                  <Item.Description>
+                    <Label color='orange' basic>
+                      You're hosting this activity
+                    </Label>
+                  </Item.Description>
+                )}
+                {activity.isGoing && !activity.isHost && (
+                  <Item.Description>
+                    <Label color='green' basic>
+                      You're going to this activity
+                    </Label>
+                  </Item.Description>
+                )}
+              </Item.Description>
             </Item.Content>
           </Item>
         </Item.Group>
@@ -31,7 +55,9 @@ const ActivityListItem = ({ activity }: Props) => {
           <Icon name='marker' /> {activity.venue}
         </span>
       </Segment>
-      <Segment secondary>Attendance go here</Segment>
+      <Segment secondary>
+        <ActivityListenItemAttendee attendees={activity.attendees!} />
+      </Segment>
       <Segment clearing>
         <span>{activity.description}</span>
         <Button

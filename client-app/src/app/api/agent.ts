@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { Activity } from '../models/activity';
+import { Activity, ActivityFormValues } from '../models/activity';
 import { toast } from 'react-toastify';
 import { history } from '../..';
 import { store } from '../stores/store';
@@ -67,7 +67,6 @@ axios.interceptors.response.use(
 );
 
 const responseBody = <T>(response: AxiosResponse<T>) => {
-  console.log('ERROR, ', response);
   return response.data;
 };
 
@@ -82,10 +81,12 @@ const request = {
 const Activities = {
   list: () => request.get<Activity[]>('/activities'),
   detail: (id: string) => request.get<Activity>(`/activities/${id}`),
-  create: (activity: Activity) => request.post<void>('/activities', activity),
-  update: (activity: Activity) =>
+  create: (activity: ActivityFormValues) =>
+    request.post<void>('/activities', activity),
+  update: (activity: ActivityFormValues) =>
     request.put<void>(`/activities/${activity.id}`, activity),
   delete: (id: string) => request.del<void>(`/activities/${id}`),
+  attend: (id: string) => request.post<void>(`/activities/${id}/attend`, {}),
 };
 
 const Account = {
