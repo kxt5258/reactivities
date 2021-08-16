@@ -22,13 +22,22 @@ const ActivityListItem = ({ activity }: Props) => {
       <Segment>
         <Item.Group>
           <Item>
-            <Item.Image size='tiny' circular src='/assets/user.png' />
+            <Item.Image
+              size='tiny'
+              circular
+              src={activity.host?.image || '/assets/user.png'}
+              as={Link}
+              to={`/profiles/${activity.host?.username}`}
+            />
             <Item.Content>
               <Item.Header as={Link} to={`/activities/${activity.id}`}>
                 {activity.title}
               </Item.Header>
               <Item.Description>
-                Hosted by {activity.host?.displayName}
+                Hosted by{' '}
+                <Link to={`/profiles/${activity.host?.username}`}>
+                  {activity.host?.displayName}
+                </Link>
                 {activity.isHost && (
                   <Item.Description>
                     <Label color='orange' basic>
