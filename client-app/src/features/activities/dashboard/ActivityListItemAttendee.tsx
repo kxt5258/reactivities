@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { List, Image, Popup } from 'semantic-ui-react';
 import { Profile } from '../../../app/models/Profile';
@@ -9,7 +8,12 @@ interface Props {
   attendees: Profile[];
 }
 
-export const ActivityListenItemAttendee = ({ attendees }: Props) => {
+export const ActivityListItemAttendee = ({ attendees }: Props) => {
+  const styles = {
+    borderColor: 'orange',
+    borderWidth: 2,
+  };
+
   return (
     <List horizontal>
       {attendees.map((attendee) => (
@@ -25,6 +29,8 @@ export const ActivityListenItemAttendee = ({ attendees }: Props) => {
                 size='mini'
                 circular
                 src={attendee.image || '/assets/user.png'}
+                bordered
+                style={attendee.following ? styles : null}
               />
             </List.Item>
           }>
@@ -37,4 +43,4 @@ export const ActivityListenItemAttendee = ({ attendees }: Props) => {
   );
 };
 
-export default observer(ActivityListenItemAttendee);
+export default observer(ActivityListItemAttendee);

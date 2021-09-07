@@ -9,11 +9,14 @@ import ProfileHeader from './ProfileHeader';
 const ProfilePage = () => {
   const { username } = useParams<{ username: string }>();
   const { profileStore } = useStore();
-  const { profile, loadProfile } = profileStore;
+  const { profile, loadProfile, setActiveTab } = profileStore;
 
   useEffect(() => {
     loadProfile(username);
-  }, [username, loadProfile]);
+    return () => {
+      setActiveTab(0);
+    };
+  }, [username, loadProfile, setActiveTab]);
 
   return (
     <Grid>
