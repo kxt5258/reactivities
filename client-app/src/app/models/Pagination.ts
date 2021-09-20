@@ -22,6 +22,5 @@ export class PagingParams {
   constructor(pageNumber = 1, pageSize = 2) {
     this.pageNumber = pageNumber;
     this.pageSize = pageSize;
-    console.log(pageNumber);
   }
 }
