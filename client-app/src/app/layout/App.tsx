@@ -17,6 +17,7 @@ import { useStore } from '../stores/store';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
 import ProfilePage from '../../features/profiles/ProfilePage';
+import PrivateRoute from './PrivateRoute';
 
 function App() {
   const { key } = useLocation();
@@ -44,15 +45,25 @@ function App() {
             <NarBar />
             <Container style={{ marginTop: '7em' }}>
               <Switch>
-                <Route path='/activities' component={ActivityDashboard} exact />
-                <Route path='/activities/:id' component={ActivityDetails} />
-                <Route
+                <PrivateRoute
+                  path='/activities'
+                  component={ActivityDashboard}
+                  exact
+                />
+                <PrivateRoute
+                  path='/activities/:id'
+                  component={ActivityDetails}
+                />
+                <PrivateRoute
                   path={['/createActivity', '/manage/:id']}
                   component={ActivityForm}
                   key={key}
                 />
-                <Route path='/profiles/:username' component={ProfilePage} />
-                <Route path='/errors' component={TestErrors} />
+                <PrivateRoute
+                  path='/profiles/:username'
+                  component={ProfilePage}
+                />
+                <PrivateRoute path='/errors' component={TestErrors} />
                 <Route path='/server-error' component={ServerError} />
                 <Route path='/login' component={LoginForm} />
                 <Route component={NotFound} />
