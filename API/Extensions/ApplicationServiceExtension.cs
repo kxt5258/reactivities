@@ -68,7 +68,7 @@ namespace API.Extensions
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
-                        .WithOrigins("http://localhost:3000", "https://kreactivities.herokuapp.com");
+                        .WithOrigins("http://localhost:3000");
                 });
             });
 
